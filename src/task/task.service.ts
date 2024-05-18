@@ -1,8 +1,9 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
+import { DatabaseService } from '../infrastructure/database/database.service';
 
 @Injectable()
 export class TaskService {
-    constructor() {}
+    constructor(private databaseService: DatabaseService) {}
 
     addTask(name: string, userId: string, priority: number): Promise<void> {
         throw new NotImplementedException();
