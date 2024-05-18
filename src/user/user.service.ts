@@ -1,12 +1,13 @@
+import { User } from '@prisma/client';
 import { DatabaseService } from '../infrastructure/database/database.service';
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
     constructor(private databaseService: DatabaseService) {}
 
     async addUser(email: string): Promise<void> {
-        this.databaseService.addUser(email);
+        await this.databaseService.addUser(email);
     }
 
     async getUser(email: string): Promise<User> {
