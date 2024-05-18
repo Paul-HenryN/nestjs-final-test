@@ -12,4 +12,8 @@ export class DatabaseService {
     async addUser(email: string): Promise<void> {
         await this.prisma.user.create({ data: { email } });
     }
+
+    async resetUsers(): Promise<void> {
+        await this.prisma.user.deleteMany();
+    }
 }

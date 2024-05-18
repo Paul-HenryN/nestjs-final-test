@@ -13,7 +13,7 @@ export class UserService {
         throw new NotImplementedException();
     }
 
-    resetData(): Promise<void> {
-        throw new NotImplementedException();
+    async resetData(): Promise<void> {
+        await this.databaseService.resetUsers();
     }
 }
