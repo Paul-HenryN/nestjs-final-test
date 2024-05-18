@@ -13,6 +13,11 @@ export class DatabaseService {
         await this.prisma.user.create({ data: { email } });
     }
 
+    async getUser(email: string): Promise<User> {
+        const user = await this.prisma.user.findUnique({ where: { email } });
+        return user;
+    }
+
     async resetUsers(): Promise<void> {
         await this.prisma.user.deleteMany();
     }

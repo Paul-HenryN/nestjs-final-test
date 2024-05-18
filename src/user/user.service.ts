@@ -9,8 +9,9 @@ export class UserService {
         this.databaseService.addUser(email);
     }
 
-    getUser(email: string): Promise<unknown> {
-        throw new NotImplementedException();
+    async getUser(email: string): Promise<User> {
+        const user = await this.databaseService.getUser(email);
+        return user;
     }
 
     async resetData(): Promise<void> {
