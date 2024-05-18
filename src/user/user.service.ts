@@ -1,11 +1,12 @@
+import { DatabaseService } from '../infrastructure/database/database.service';
 import { Injectable, NotImplementedException } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
-    constructor() {}
+    constructor(private databaseService: DatabaseService) {}
 
-    addUser(email: string): Promise<void> {
-        throw new NotImplementedException();
+    async addUser(email: string): Promise<void> {
+        this.databaseService.addUser(email);
     }
 
     getUser(email: string): Promise<unknown> {
