@@ -1,44 +1,35 @@
 import {
-    BadRequestException,
     Body,
     Controller,
     Get,
     Param,
-    ParseIntPipe,
     Post,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
-import { isStrictlyPositiveInteger } from '../utils/validators';
+import { CreateTaskDto } from './task.dto';
+import { ParseStrictlyPositiveIntPipe } from '../utils/parse-strictly-positive-int-pipe';
 
 @Controller()
 export class TaskController {
     constructor(private taskService: TaskService) {}
 
     @Get('/user/:userId')
-    async getUserTasks(@Param('userId', ParseIntPipe) userId: number) {
-        if (!isStrictlyPositiveInteger(userId)) {
-            throw new BadRequestException('Invalid user id.');
-        }
-
+    async getUserTasks(
+        @Param('userId', ParseStrictlyPositiveIntPipe) userId: number,
+    ) {
         const tasks = await this.taskService.getUserTasks(userId);
         return tasks;
     }
 
     @Post()
+    @UsePipes(new ValidationPipe({ transform: true }))
     async addTask(
-        @Body('name') name: string,
-        @Body('userId', ParseIntPipe) userId: number,
-        @Body('priority', ParseIntPipe) priority: number,
+        @Body() createTaskDto: CreateTaskDto,
+        @Body('priority', ParseStrictlyPositiveIntPipe) priority: number,
     ) {
-        if (!isStrictlyPositiveInteger(userId)) {
-            throw new BadRequestException('Invalid user id.');
-        }
-
-        if (!isStrictlyPositiveInteger(priority)) {
-            throw new BadRequestException(
-                'Task priority must be a strictly positive integer.',
-            );
-        }
+        const { name, userId } = createTaskDto;
 
         await this.taskService.addTask(name, userId, priority);
     }
