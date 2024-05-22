@@ -6,6 +6,6 @@ export function isValidEmail(email: string): boolean {
 export function isNumericString(value: string): boolean {
     return /^[0-9]+$/.test(value);
 }
-export function isInteger(value: number): boolean {
-    return Number.isInteger(value);
+export function isStrictlyPositiveInteger(value: number): boolean {
+    return Number.isInteger(value) && value > 0;
 }

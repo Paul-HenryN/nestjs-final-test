@@ -1,4 +1,4 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../infrastructure/database/database.service';
 import { Task } from '@prisma/client';
 
@@ -19,7 +19,7 @@ export class TaskService {
         return task;
     }
 
-    async getUserTasks(userId: number): Promise<unknown[]> {
+    async getUserTasks(userId: number): Promise<Task[]> {
         const tasks = await this.databaseService.getUserTasks(userId);
         return tasks;
     }

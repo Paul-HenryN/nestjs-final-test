@@ -2,6 +2,7 @@ import {
     BadRequestException,
     ConflictException,
     Injectable,
+    NotFoundException,
 } from '@nestjs/common';
 import { PrismaClient, Task, User } from '@prisma/client';
 
@@ -48,7 +49,9 @@ export class DatabaseService {
         });
 
         if (!user) {
-            throw new BadRequestException('Invalid user id');
+            throw new NotFoundException(`No user with id ${userId}`);
+        } else {
+            console.log(`User with id ${userId} found !!!!!!!!`);
         }
 
         await this.prisma.task.create({
@@ -71,7 +74,7 @@ export class DatabaseService {
         });
 
         if (!user) {
-            throw new BadRequestException('Invalid user id');
+            throw new NotFoundException(`No user with id ${userId}`);
         }
 
         return user.tasks;
