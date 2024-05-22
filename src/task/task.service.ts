@@ -47,5 +47,6 @@ export class TaskService {
 
     async resetData(): Promise<void> {
         await this.databaseService.task.deleteMany();
+        await this.databaseService.task.deleteMany();
     }
 }
