@@ -8,7 +8,7 @@ export class TaskService {
 
     async addTask(
         name: string,
-        userId: string,
+        userId: number,
         priority: number,
     ): Promise<void> {
         await this.databaseService.addTask(name, userId, priority);
@@ -19,7 +19,7 @@ export class TaskService {
         return task;
     }
 
-    async getUserTasks(userId: string): Promise<unknown[]> {
+    async getUserTasks(userId: number): Promise<unknown[]> {
         const tasks = await this.databaseService.getUserTasks(userId);
         return tasks;
     }

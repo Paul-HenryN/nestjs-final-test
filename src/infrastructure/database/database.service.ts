@@ -40,7 +40,7 @@ export class DatabaseService {
 
     async addTask(
         name: string,
-        userId: string,
+        userId: number,
         priority: number,
     ): Promise<void> {
         const user = await this.prisma.user.findUnique({
@@ -64,7 +64,7 @@ export class DatabaseService {
         return task;
     }
 
-    async getUserTasks(userId: string): Promise<Task[]> {
+    async getUserTasks(userId: number): Promise<Task[]> {
         const user = await this.prisma.user.findUnique({
             where: { id: userId },
             include: { tasks: true },

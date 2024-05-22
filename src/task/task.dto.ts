@@ -2,7 +2,7 @@ import { IsNumberString } from 'class-validator';
 
 export class CreateTaskDto {
     name: string;
-    userId: string;
+    userId: number;
 
     @IsNumberString()
     priority: string;

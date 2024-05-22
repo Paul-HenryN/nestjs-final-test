@@ -15,7 +15,7 @@ export class TaskController {
     constructor(private taskService: TaskService) {}
 
     @Get('/user/:userId')
-    async getUserTasks(@Param('userId') userId: string) {
+    async getUserTasks(@Param('userId') userId: number) {
         const tasks = await this.taskService.getUserTasks(userId);
         return tasks;
     }
