@@ -1,5 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaClient, User } from '@prisma/client';
+import {
+    BadRequestException,
+    ConflictException,
+    Injectable,
+} from '@nestjs/common';
+import { PrismaClient, Task, User } from '@prisma/client';
 
 @Injectable()
 export class DatabaseService {
@@ -28,5 +32,48 @@ export class DatabaseService {
 
     async resetUsers(): Promise<void> {
         await this.prisma.user.deleteMany();
+    }
+
+    async resetTasks(): Promise<void> {
+        await this.prisma.task.deleteMany();
+    }
+
+    async addTask(
+        name: string,
+        userId: string,
+        priority: number,
+    ): Promise<void> {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+        });
+
+        if (!user) {
+            throw new BadRequestException('Invalid user id');
+        }
+
+        await this.prisma.task.create({
+            data: { name, priority, userId },
+        });
+    }
+
+    async getTaskByName(name: string): Promise<Task> {
+        const task = await this.prisma.task.findFirst({
+            where: { name },
+        });
+
+        return task;
+    }
+
+    async getUserTasks(userId: string): Promise<Task[]> {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            include: { tasks: true },
+        });
+
+        if (!user) {
+            throw new BadRequestException('Invalid user id');
+        }
+
+        return user.tasks;
     }
 }

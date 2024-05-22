@@ -1,23 +1,30 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { DatabaseService } from '../infrastructure/database/database.service';
+import { Task } from '@prisma/client';
 
 @Injectable()
 export class TaskService {
     constructor(private databaseService: DatabaseService) {}
 
-    addTask(name: string, userId: string, priority: number): Promise<void> {
-        throw new NotImplementedException();
+    async addTask(
+        name: string,
+        userId: string,
+        priority: number,
+    ): Promise<void> {
+        await this.databaseService.addTask(name, userId, priority);
     }
 
-    getTaskByName(name: string): Promise<unknown> {
-        throw new NotImplementedException();
+    async getTaskByName(name: string): Promise<Task> {
+        const task = await this.databaseService.getTaskByName(name);
+        return task;
     }
 
-    getUserTasks(userId: string): Promise<unknown[]> {
-        throw new NotImplementedException();
+    async getUserTasks(userId: string): Promise<unknown[]> {
+        const tasks = await this.databaseService.getUserTasks(userId);
+        return tasks;
     }
 
-    resetData(): Promise<void> {
-        throw new NotImplementedException();
+    async resetData(): Promise<void> {
+        await this.databaseService.resetTasks();
     }
 }
