@@ -1,21 +1,31 @@
 import { User } from '@prisma/client';
 import { DatabaseService } from '../infrastructure/database/database.service';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
     constructor(private databaseService: DatabaseService) {}
 
     async addUser(email: string): Promise<void> {
-        await this.databaseService.addUser(email);
+        const existingUser = await this.databaseService.user.findUnique({
+            where: { email },
+        });
+
+        if (existingUser) {
+            throw new ConflictException('This email is already in use');
+        }
+
+        await this.databaseService.user.create({ data: { email } });
     }
 
     async getUser(email: string): Promise<User> {
-        const user = await this.databaseService.getUser(email);
+        const user = await this.databaseService.user.findUnique({
+            where: { email },
+        });
         return user;
     }
 
     async resetData(): Promise<void> {
-        await this.databaseService.resetUsers();
+        await this.databaseService.user.deleteMany();
     }
 }
