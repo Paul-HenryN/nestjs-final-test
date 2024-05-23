@@ -28,7 +28,7 @@ npm ci
 
 ### Lancer le projet
 
-Ce script lance un conteneur pour les bases de données de développement et de test, synchronise le schéma Prisma (migrations) et démarre le serveur sur le port 3000.
+Ce script lance un conteneur pour les bases de données de développement et de test, lance les migrations pour la base de données de développement et démarre le serveur sur le port 3000.
 
 #### Linux
 
@@ -42,7 +42,9 @@ npm run start:postgres:linux
 npm run start:postgres:windows
 ```
 
-### Scripts de test
+### Script de test
+
+Ce script lance un conteneur, exécute les migrations pour les bases de données de test et lance les tests.
 
 #### Windows
 
