@@ -1,4 +1,4 @@
-# Projet final Nestjs
+# Projet final NestJS
 
 Travail réalisé par **NGANKAM NGOUNOU Paul-Henry**
 
@@ -8,7 +8,7 @@ Ce projet est une API de TodoList.
 
 ## Tech Stack
 
--   Nest.JS
+-   NestJS
 -   Prisma
 -   PostgreSQL
 
@@ -28,13 +28,15 @@ npm ci
 
 ### Lancer le projet
 
-#### Linux:
+Ce script lance un conteneur pour les bases de données de développement et de test, synchronise le schéma Prisma (migrations) et démarre le serveur sur le port 3000.
+
+#### Linux
 
 ```bash
 npm run start:postgres:linux
 ```
 
-#### Windows:
+#### Windows
 
 ```bash
 npm run start:postgres:windows
@@ -42,14 +44,14 @@ npm run start:postgres:windows
 
 ### Scripts de test
 
-#### Linux
-
-```bash
-npm run test:e2e:postgres:linux
-```
-
 #### Windows
 
 ```bash
 npm run test:e2e:postgres:windows
+```
+
+#### Linux
+
+```bash
+npm run test:e2e:postgres:linux
 ```
