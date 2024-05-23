@@ -7,7 +7,7 @@ export class UserService {
     constructor(private databaseService: DatabaseService) {}
 
     async addUser(email: string): Promise<void> {
-        const existingUser = await this.databaseService.user.findUnique({
+        const existingUser = await this.databaseService.client.user.findUnique({
             where: { email },
         });
 
@@ -15,17 +15,17 @@ export class UserService {
             throw new ConflictException('This email is already in use');
         }
 
-        await this.databaseService.user.create({ data: { email } });
+        await this.databaseService.client.user.create({ data: { email } });
     }
 
     async getUser(email: string): Promise<User> {
-        const user = await this.databaseService.user.findUnique({
+        const user = await this.databaseService.client.user.findUnique({
             where: { email },
         });
         return user;
     }
 
     async resetData(): Promise<void> {
-        await this.databaseService.user.deleteMany();
+        await this.databaseService.client.user.deleteMany();
     }
 }

@@ -11,7 +11,7 @@ export class TaskService {
         userId: number,
         priority: number,
     ): Promise<void> {
-        const user = await this.databaseService.user.findUnique({
+        const user = await this.databaseService.client.user.findUnique({
             where: { id: userId },
         });
 
@@ -19,13 +19,13 @@ export class TaskService {
             throw new NotFoundException(`No user with id ${userId}`);
         }
 
-        await this.databaseService.task.create({
+        await this.databaseService.client.task.create({
             data: { name, priority, userId },
         });
     }
 
     async getTaskByName(name: string): Promise<Task> {
-        const task = await this.databaseService.task.findFirst({
+        const task = await this.databaseService.client.task.findFirst({
             where: { name },
         });
 
@@ -33,7 +33,7 @@ export class TaskService {
     }
 
     async getUserTasks(userId: number): Promise<Task[]> {
-        const user = await this.databaseService.user.findUnique({
+        const user = await this.databaseService.client.user.findUnique({
             where: { id: userId },
             include: { tasks: true },
         });
@@ -46,6 +46,6 @@ export class TaskService {
     }
 
     async resetData(): Promise<void> {
-        await this.databaseService.task.deleteMany();
+        await this.databaseService.client.task.deleteMany();
     }
 }
